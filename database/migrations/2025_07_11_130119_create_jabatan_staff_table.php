@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('staff_id')->references('id')->on('staff');
             $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->foreign('jabatan_id')->references('id')->on('jabatan');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai')->nullable();
+            $table->date('tgl_mulai');
+            $table->date('tgl_selesai')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

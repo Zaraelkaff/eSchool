@@ -34,4 +34,9 @@ class Murid extends Model
     {
         return $this->hasMany(Absen::class,'murid_id','id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id', 'id');
+    }
 }

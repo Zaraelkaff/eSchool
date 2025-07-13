@@ -15,4 +15,8 @@ class Mapel extends Model
     {
         return $this->hasMany(Jadwal::class,'mapel_id','id');
     }
+
+    public function kelas_mapel(){
+        return $this->hasMany(KelasMapel::class,'mapel_id','id');
+    }
 }

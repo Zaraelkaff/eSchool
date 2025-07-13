@@ -11,8 +11,7 @@ class Jabatan extends Model
         'nama_jabatan',
         'is_active'
     ];
-    public function staff()
-    {
-        return $this->belongsToMany(Staff::class, 'staff_jabatan');
+    public function jabatan_staff(){
+        return $this->hasMany(JabatanStaff::class,'jabatan_id','id');
     }
 }

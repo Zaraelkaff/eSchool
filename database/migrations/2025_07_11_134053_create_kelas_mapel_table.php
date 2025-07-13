@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('mapel_id');
             $table->foreign('mapel_id')->references('id')->on('mapel');
 
-            $table->unsignedBigInteger('pengajar');
-            $table->foreign('pengajar')->references('id')->on('staff');
+            $table->unsignedBigInteger('pengajar_id');
+            $table->foreign('pengajar_id')->references('id')->on('staff');
 
             $table->timestamps();
         });

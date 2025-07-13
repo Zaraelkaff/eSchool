@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('isi');
             $table->string('flyer')->nullable(); 
-            $table->date('tanggal_publish');
+            $table->date('tgl_publish');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

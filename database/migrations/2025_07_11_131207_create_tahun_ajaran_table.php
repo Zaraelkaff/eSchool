@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tahun_ajaran', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_ajaran')->unique();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('tgl_mulai');
+            $table->date('tgl_selesai');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
