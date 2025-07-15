@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('NIS');
             $table->string('nama');
             $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->date('tanggal_lahir');
+            $table->date('tgl_lahir');
             $table->string('agama');
             $table->string('alamat');
             $table->string('notelp');

@@ -13,7 +13,7 @@ class Murid extends Model
         'NIS',
         'nama',
         'jenis_kelamin',
-        'tanggal_lahir',
+        'tgl_lahir',
         'agama',
         'alamat',
         'notelp',

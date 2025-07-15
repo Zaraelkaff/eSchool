@@ -1,0 +1,100 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class MasterSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::table('master_kelas')->insert([
+            [
+                'nama_kelas' => '1A',
+                'level' => 1,
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'nama_kelas' => '2A',
+                'level' => 2,
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'nama_kelas' => '3A',
+                'level' => 3,
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'nama_kelas' => '1B',
+                'level' => 1,
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'nama_kelas' => '2B',
+                'level' => 2,
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'nama_kelas' => '3B',
+                'level' => 3,
+                'is_active' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        ]);
+
+        DB::table('tahun_ajaran')->insert([
+            [
+                'tahun_ajaran' => '2021/2022',
+                'tgl_mulai' => '2021-07-15',
+                'tgl_selesai' => '2022-06-30',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'tahun_ajaran' => '2022/2023',
+                'tgl_mulai' => '2022-07-15',
+                'tgl_selesai' => '2023-06-30',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'tahun_ajaran' => '2023/2024',
+                'tgl_mulai' => '2023-07-15',
+                'tgl_selesai' => '2024-06-30',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'tahun_ajaran' => '2024/2025',
+                'tgl_mulai' => '2024-07-15',
+                'tgl_selesai' => '2025-06-30',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'tahun_ajaran' => '2025/2026',
+                'tgl_mulai' => '2025-07-15',
+                'tgl_selesai' => '2026-06-30',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}

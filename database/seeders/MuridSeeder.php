@@ -32,7 +32,7 @@ class MuridSeeder extends Seeder
                 'NIS' => 'SDN' . str_pad((string)($i + 1), 4, '0', STR_PAD_LEFT),
                 'nama' => $namaDepan[$i],
                 'jenis_kelamin' => $i % 2 === 0 ? 'L' : 'P',
-                'tanggal_lahir' => $tanggalLahir->format('Y-m-d'),
+                'tgl_lahir' => $tanggalLahir->format('Y-m-d'),
                 'agama' => $agamaList[rand(0, count($agamaList) - 1)],
                 'alamat' => 'Jl. Mawar No. ' . rand(1, 100),
                 'notelp' => '08' . rand(1111111111, 9999999999),
