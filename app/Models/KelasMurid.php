@@ -10,4 +10,9 @@ class KelasMurid extends Model
     protected $fillable = [
         'murid_id', 'kelas_id'
     ];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }

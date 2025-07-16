@@ -6,6 +6,8 @@
         <option value="semua" {{ (isset($filter) && $filter === 'semua') ? 'selected' : '' }}>Semua</option>
     </select>
 </form>
+
+<a href="{{ route('murid.addView') }}">tambah murid</a>
 <table>
     <thead>
         <tr>
@@ -39,6 +41,8 @@
                             <i class="bi bi-toggle-{{ $murid->is_active ? 'on' : 'off' }}"></i>
                         </button>
                     </form>
+                    <a href="{{ url('/murid/detail/'.$murid->id) }}">detail</a>
+                    <a href="{{ route('murid.editView', $murid->id) }}">edit</a>
                 </td>
             </tr>
         @endforeach
