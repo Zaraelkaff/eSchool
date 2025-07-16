@@ -14,6 +14,32 @@ class MasterSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('jabatan')->insert([
+            [
+                'nama_jabatan' => 'admin',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_jabatan' => 'kepsek',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_jabatan' => 'guru',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_jabatan' => 'OB',
+                'is_active' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
         DB::table('master_kelas')->insert([
             [
                 'nama_kelas' => '1A',
