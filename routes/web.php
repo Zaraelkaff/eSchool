@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\MasterJabatanController;
+use App\Http\Controllers\MasterTahunAjaranController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,3 +23,8 @@ Route::get('/master/jabatan', [MasterJabatanController::class, 'index'])->name('
 Route::patch('/master/jabatan/isActive/{id}', [MasterJabatanController::class, 'isActive'])->name('master.jabatan.isActive');
 Route::post('/master/jabatan/add', [MasterJabatanController::class, 'add'])->name('master.jabatan.add');
 Route::patch('/master/jabatan/edit/{id}', [MasterJabatanController::class, 'edit'])->name('master.jabatan.edit');
+
+Route::get('/master/tahunajaran', [MasterTahunAjaranController::class, 'index'])->name('master.tahunajaran.index');
+Route::patch('/master/tahunajaran/isActive/{id}', [MasterTahunAjaranController::class, 'isActive'])->name('master.tahunajaran.isActive');
+Route::post('/master/tahunajaran/add', [MasterTahunAjaranController::class, 'add'])->name('master.tahunajaran.add');
+Route::patch('/master/tahunajaran/edit/{id}', [MasterTahunAjaranController::class, 'edit'])->name('master.tahunajaran.edit');

@@ -10,7 +10,8 @@ class TahunAjaran extends Model
     protected $fillable = [
         'tahun_ajaran',
         'tgl_mulai',
-        'tgl_selesai'
+        'tgl_selesai',
+        'is_active'
     ];
     public function kelas()
     {
