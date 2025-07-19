@@ -5,6 +5,7 @@ use App\Http\Controllers\MuridController;
 use App\Http\Controllers\MasterJabatanController;
 use App\Http\Controllers\MasterTahunAjaranController;
 use App\Http\Controllers\MasterMapelController;
+use App\Http\Controllers\MasterKelasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,3 +35,8 @@ Route::get('/master/mapel', [MasterMapelController::class, 'index'])->name('mast
 Route::patch('/master/mapel/isActive/{id}', [MasterMapelController::class, 'isActive'])->name('master.mapel.isActive');
 Route::post('/master/mapel/add', [MasterMapelController::class, 'add'])->name('master.mapel.add');
 Route::patch('/master/mapel/edit/{id}', [MasterMapelController::class, 'edit'])->name('master.mapel.edit');
+
+Route::get('/master/kelas', [MasterKelasController::class, 'index'])->name('master.kelas.index');
+Route::patch('/master/kelas/isActive/{id}', [MasterKelasController::class, 'isActive'])->name('master.kelas.isActive');
+Route::post('/master/kelas/add', [MasterKelasController::class, 'add'])->name('master.kelas.add');
+Route::patch('/master/kelas/edit/{id}', [MasterKelasController::class, 'edit'])->name('master.kelas.edit');
