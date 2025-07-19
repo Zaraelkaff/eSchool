@@ -79,7 +79,6 @@ class MasterSeeder extends Seeder
                 'updated_at' => now(),
             ]
         ]);
-
         DB::table('tahun_ajaran')->insert([
             [
                 'tahun_ajaran' => '2021/2022',
@@ -118,6 +117,50 @@ class MasterSeeder extends Seeder
                 'tgl_mulai' => '2025-07-15',
                 'tgl_selesai' => '2026-06-30',
                 'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+        DB::table('mapel')->insert([
+            [
+                'nama_mapel'=>'Matematika',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Fisika',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Biologi',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Kimia',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Sejarah',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Bahasa Indonesia',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Geografi',
+                'is_active' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

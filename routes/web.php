@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\MasterJabatanController;
 use App\Http\Controllers\MasterTahunAjaranController;
+use App\Http\Controllers\MasterMapelController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,3 +29,8 @@ Route::get('/master/tahunajaran', [MasterTahunAjaranController::class, 'index'])
 Route::patch('/master/tahunajaran/isActive/{id}', [MasterTahunAjaranController::class, 'isActive'])->name('master.tahunajaran.isActive');
 Route::post('/master/tahunajaran/add', [MasterTahunAjaranController::class, 'add'])->name('master.tahunajaran.add');
 Route::patch('/master/tahunajaran/edit/{id}', [MasterTahunAjaranController::class, 'edit'])->name('master.tahunajaran.edit');
+
+Route::get('/master/mapel', [MasterMapelController::class, 'index'])->name('master.mapel.index');
+Route::patch('/master/mapel/isActive/{id}', [MasterMapelController::class, 'isActive'])->name('master.mapel.isActive');
+Route::post('/master/mapel/add', [MasterMapelController::class, 'add'])->name('master.mapel.add');
+Route::patch('/master/mapel/edit/{id}', [MasterMapelController::class, 'edit'])->name('master.mapel.edit');
