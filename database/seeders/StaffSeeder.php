@@ -32,7 +32,7 @@ class StaffSeeder extends Seeder
                 'gelar_depan' => null,
                 'gelar_belakang' => $i === 19 ? 'S.AB.' : 'S.Pd.', // Admin di akhir
                 'jenis_kelamin' => $jenisKelamin,
-                'tanggal_lahir' => $tanggalLahir->format('Y-m-d'),
+                'tgl_lahir' => $tanggalLahir->format('Y-m-d'),
                 'alamat' => 'Jl. Pendidikan No. ' . rand(1, 100),
                 'notelp' => '08' . rand(1111111111, 9999999999),
                 'lulusan' => $lulusan,

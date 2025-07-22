@@ -13,7 +13,7 @@ class Staff extends Model
         'gelar_depan',
         'gelar_belakang',
         'jenis_kelamin',
-        'tanggal_lahir',
+        'tgl_lahir',
         'alamat',
         'notelp',
         'lulusan',

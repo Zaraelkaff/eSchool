@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('gelar_depan')->nullable();
             $table->string('gelar_belakang')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->date('tanggal_lahir');
+            $table->date('tgl_lahir');
             $table->string('alamat');
             $table->string('notelp');
             $table->string('lulusan');

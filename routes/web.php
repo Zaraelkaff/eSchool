@@ -6,6 +6,7 @@ use App\Http\Controllers\MasterJabatanController;
 use App\Http\Controllers\MasterTahunAjaranController;
 use App\Http\Controllers\MasterMapelController;
 use App\Http\Controllers\MasterKelasController;
+use App\Http\Controllers\StaffController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,16 @@ Route::get('/murid/editView/{id}', [MuridController::class, 'editView'])->name('
 Route::patch('/murid/edit/{id}', [MuridController::class, 'edit'])->name('murid.edit');
 Route::delete('/murid/kelas/hapus/{id}', [MuridController::class, 'hapusKelas'])->name('murid.kelas.delete');
 Route::post('/murid/kelas/add', [MuridController::class, 'tambahKelas'])->name('murid.kelas.add');
+
+Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+Route::get('/staff/detail/{id}', [StaffController::class, 'detail'])->name('staff.detail');
+Route::get('/staff/addView', [StaffController::class, 'addView'])->name('staff.addView');
+Route::post('/staff/add', [StaffController::class, 'add'])->name('staff.add');
+Route::get('/staff/editView/{id}', [StaffController::class, 'editView'])->name('staff.editView');
+Route::patch('/staff/edit/{id}', [StaffController::class, 'edit'])->name('staff.edit');
+Route::post('/staff/{staff}/jabatan', [StaffController::class, 'addJabatan'])->name('staff.jabatan.add');
+Route::patch('/staff/{staff}/jabatan/{jabatanStaff}', [StaffController::class, 'updateJabatan'])->name('staff.jabatan.update');
+Route::delete('/staff/{staff}/jabatan/{jabatanStaff}', [StaffController::class, 'deleteJabatan'])->name('staff.jabatan.delete');
 
 Route::get('/master/jabatan', [MasterJabatanController::class, 'index'])->name('master.jabatan.index');
 Route::patch('/master/jabatan/isActive/{id}', [MasterJabatanController::class, 'isActive'])->name('master.jabatan.isActive');
