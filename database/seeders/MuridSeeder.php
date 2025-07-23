@@ -2,17 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class MuridSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $namaDepan = ['Ali', 'Budi', 'Citra', 'Dina', 'Eka', 'Fajar', 'Gina', 'Hani', 'Irfan', 'Joko', 'Kiki', 'Lina', 'Mega', 'Nina', 'Oki', 'Putri', 'Qori', 'Rani', 'Sita', 'Tono'];
@@ -23,9 +18,16 @@ class MuridSeeder extends Seeder
         $murid = [];
 
         for ($i = 0; $i < 20; $i++) {
-            $grup = intdiv($i, 5); // Kelompok 0-3
-            $tanggalMasuk = Carbon::create(2022 + $grup, 7, 15); // 2022, 2023, 2024, 2025
-            $tanggalLahir = $tanggalMasuk->copy()->subYears(7); // Umur masuk SD 7 tahun
+            if ($i < 5) {
+                $tahunMasuk = 2023;
+            } elseif ($i < 10) {
+                $tahunMasuk = 2024;
+            } else {
+                $tahunMasuk = 2025;
+            }
+
+            $tanggalMasuk = Carbon::create($tahunMasuk, 7, 15);
+            $tanggalLahir = $tanggalMasuk->copy()->subYears(7);
 
             $murid[] = [
                 'NIK' => str_pad((string)rand(100000000000000, 999999999999999), 16, '0', STR_PAD_LEFT),
@@ -33,7 +35,7 @@ class MuridSeeder extends Seeder
                 'nama' => $namaDepan[$i],
                 'jenis_kelamin' => $i % 2 === 0 ? 'L' : 'P',
                 'tgl_lahir' => $tanggalLahir->format('Y-m-d'),
-                'agama' => $agamaList[rand(0, count($agamaList) - 1)],
+                'agama' => $agamaList[array_rand($agamaList)],
                 'alamat' => 'Jl. Mawar No. ' . rand(1, 100),
                 'notelp' => '08' . rand(1111111111, 9999999999),
                 'nama_ayah' => $namaAyah[array_rand($namaAyah)],
