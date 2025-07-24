@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterMapelController;
 use App\Http\Controllers\MasterKelasController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\JadwalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,4 +60,6 @@ Route::get('/kelas/editView/{id}', [KelasController::class, 'editView'])->name('
 Route::patch('/kelas/edit/{id}', [KelasController::class, 'edit'])->name('kelas.edit');
 Route::delete('/kelas/{kelas_id}/murid/{murid_id}', [KelasController::class, 'hapusMurid'])->name('kelas.murid.hapus');
 Route::get('/kelas/{id}', [KelasController::class, 'detail'])->name('kelas.detail');
-Route::post('/kelas/{kelas_id}/mur-remote-code-executionid/tambah', [KelasController::class, 'tambahMurid'])->name('kelas.murid.tambah');
+Route::post('/kelas/{kelas_id}/murid/tambah', [KelasController::class, 'tambahMurid'])->name('kelas.murid.tambah');
+Route::post('/kelas/{kelas_id}/mapel/tambah', [KelasController::class, 'tambahMapel'])->name('kelas.mapel.tambah');
+Route::delete('/kelas/{kelas_id}/mapel/{mapel_id}', [KelasController::class, 'hapusMapel'])->name('kelas.mapel.hapus');

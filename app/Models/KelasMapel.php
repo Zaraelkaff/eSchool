@@ -8,11 +8,11 @@ class KelasMapel extends Model
 {
     protected $table = 'kelas_mapel';
     protected $fillable = [
-        'kelas_id', 'mapel_id', 'pengajar'
+        'kelas_id', 'mapel_id', 'pengajar_id'
     ];
-    public function kelas_mapel()
+    public function pengajar()
     {
-        return $this->belongsTo(Staff::class,'pengajar','id');
+        return $this->belongsTo(Staff::class,'pengajar_id','id');
     }
 
     public function mapel(){

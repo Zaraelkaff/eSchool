@@ -45,7 +45,7 @@
     <label for="wali_kelas_id">Wali Kelas:</label><br>
     <select name="wali_kelas_id" required>
         <option value="">-- Pilih --</option>
-        @foreach($waliKelas as $wk)
+        @foreach($guru as $wk)
             <option value="{{ $wk->id }}" {{ $kelas->wali_kelas_id == $wk->id ? 'selected' : '' }}>
                 {{ $wk->nama }}
             </option>
@@ -83,7 +83,28 @@ updated at: {{ $kelas->updated_at }} <br>
     <div style="color: red; margin: 10px 0;">{{ session('error') }}</div>
 @endif
 
+
+<h3>Daftar Mapel</h3>
+<button onclick="openMapelModal()">Tambah Mapel</button>
+@if($kelas->kelasMapel->count())
+<ul>
+@foreach($kelas->kelasMapel as $k)
+    <li>{{ $k->mapel->nama_mapel }} - {{ $k->pengajar->nama }}</li> 
+    <form action="{{ route('kelas.mapel.hapus', ['kelas_id' => $kelas->id, 'mapel_id' => $k->mapel_id]) }}" 
+        method="POST" style="display:inline;" 
+        onsubmit="return confirm('Yakin ingin menghapus {{ $k->mapel->nama_mapel }} dari kelas ini?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Hapus</button>
+    </form>
+@endforeach
+</ul>
+@else
+    <p>Belum ada mapel</p>
+@endif
+
 <h3>Daftar Murid</h3>
+<button onclick="openModal()">Tambah Murid</button>
 @if ($kelas->murid->count())
     <table>
         <thead>
@@ -118,13 +139,18 @@ updated at: {{ $kelas->updated_at }} <br>
     <p>Belum ada murid dalam kelas ini</p>
 @endif
 
-<!-- Tombol Tambah Murid -->
-<button onclick="openModal()">Tambah Murid</button>
+<hr>
+created at: {{ $kelas->created_at }} <br>
+updated at: {{ $kelas->updated_at }} <br>
+<hr>
 
-<!-- Modal -->
+<!-- Modal Tambah Murid -->
 <div id="tambahMuridModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
     <div style="background:white; width:50%; margin:100px auto; padding:20px; border-radius:5px;">
         <h3>Tambah Murid</h3>
+        @if (session('error') && session('modal') == 'murid')
+            <div style="color: red; margin-bottom: 10px;">{{ session('error') }}</div>
+        @endif
         <form action="{{ route('kelas.murid.tambah', $kelas->id) }}" method="POST">
             @csrf
             <div id="muridInputs">
@@ -140,62 +166,158 @@ updated at: {{ $kelas->updated_at }} <br>
             @if ($murids->isEmpty())
                 <p>Tidak ada murid tersedia untuk ditambahkan.</p>
             @endif
-            <button type="button" onclick="tambahBaris()" @if ($murids->isEmpty()) disabled @endif>Tambah Baris</button>
+            <button type="button" onclick="tambahBaris('murid')" @if ($murids->isEmpty()) disabled @endif>Tambah Baris</button>
             <button type="submit" @if ($murids->isEmpty()) disabled @endif>Simpan</button>
-            <button type="button" onclick="closeModal()">Batal</button>
+            <button type="button" onclick="closeModal('tambahMuridModal')">Batal</button>
         </form>
     </div>
 </div>
 
-<!-- JavaScript untuk Modal, Tambah Baris, Hapus Baris, dan Inisialisasi Select2 -->
+<!-- Modal Tambah Mapel -->
+<div id="tambahMapelModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+    <div style="background:white; width:50%; margin:100px auto; padding:20px; border-radius:5px;">
+        <h3>Tambah Mata Pelajaran</h3>
+        @if (session('error') && session('modal') == 'mapel')
+            <div style="color: red; margin-bottom: 10px;">{{ session('error') }}</div>
+        @endif
+        <form action="{{ route('kelas.mapel.tambah', $kelas->id) }}" method="POST">
+            @csrf
+            <div id="mapelInputs">
+                <div class="mapel-row" style="margin-bottom:10px;">
+                    <select name="mapel_data[0][mapel_id]" class="mapel-select" required style="width:40%; margin-right:10px;">
+                        <option value="" disabled selected>Pilih Mapel</option>
+                        @foreach ($mapels as $mapel)
+                            <option value="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</option>
+                        @endforeach
+                    </select>
+                    <select name="mapel_data[0][pengajar_id]" class="pengajar-select" required style="width:40%;">
+                        <option value="" disabled selected>Pilih Pengajar</option>
+                        @foreach ($guru as $pengajar)
+                            <option value="{{ $pengajar->id }}">{{ $pengajar->nama }} ({{ $pengajar->NIK }})</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            @if ($mapels->isEmpty() || $guru->isEmpty())
+                <p>Tidak ada mata pelajaran atau pengajar tersedia untuk ditambahkan.</p>
+            @endif
+            <button type="button" onclick="tambahBaris('mapel')" @if ($mapels->isEmpty() || $guru->isEmpty()) disabled @endif>Tambah Baris</button>
+            <button type="submit" @if ($mapels->isEmpty() || $guru->isEmpty()) disabled @endif>Simpan</button>
+            <button type="button" onclick="closeModal('tambahMapelModal')">Batal</button>
+        </form>
+    </div>
+</div>
+
 <script>
-    // Inisialisasi Select2 untuk semua dropdown dengan kelas .murid-select
+    // Inisialisasi Select2 untuk semua dropdown
     $(document).ready(function() {
         $('.murid-select').select2({
             placeholder: 'Ketik NIK atau Nama',
             allowClear: true,
             width: '100%'
         });
+        $('.mapel-select').select2({
+            placeholder: 'Pilih Mapel',
+            allowClear: true,
+            width: '100%'
+        });
+        $('.pengajar-select').select2({
+            placeholder: 'Pilih Pengajar',
+            allowClear: true,
+            width: '100%'
+        });
+
+        // Buka modal yang sesuai jika ada error
+        @if (session('error') && session('modal'))
+            @if (session('modal') == 'murid')
+                openModal();
+            @elseif (session('modal') == 'mapel')
+                openMapelModal();
+            @endif
+        @endif
     });
 
-    let barisIndex = 1;
+    let muridBarisIndex = 1;
+    let mapelBarisIndex = 1;
 
     function openModal() {
         document.getElementById('tambahMuridModal').style.display = 'block';
     }
 
-    function closeModal() {
-        document.getElementById('tambahMuridModal').style.display = 'none';
+    function openMapelModal() {
+        document.getElementById('tambahMapelModal').style.display = 'block';
     }
 
-    function tambahBaris() {
-        const container = document.getElementById('muridInputs');
-        const newRow = document.createElement('div');
-        newRow.className = 'murid-row';
-        newRow.style.marginBottom = '10px';
-        newRow.innerHTML = `
-            <select name="murid_ids[${barisIndex}]" class="murid-select" required style="width:70%; margin-right:10px;">
-                <option value="" disabled selected>Pilih Murid</option>
-                @foreach ($murids as $murid)
-                    <option value="{{ $murid->id }}">{{ $murid->nama }} ({{ $murid->NIK }})</option>
-                @endforeach
-            </select>
-            <button type="button" onclick="hapusBaris(this)" style="background-color:#f44336; color:white; padding:8px 12px; border:none; border-radius:3px; cursor:pointer;">Hapus</button>
-        `;
-        container.appendChild(newRow);
-        // Inisialisasi Select2 untuk dropdown baru
-        $(newRow).find('.murid-select').select2({
-            placeholder: 'Ketik NIK atau Nama',
-            allowClear: true,
-            width: '100%'
-        });
-        barisIndex++;
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
     }
 
-    function hapusBaris(button) {
-        if (document.querySelectorAll('.murid-row').length > 1) {
+    function tambahBaris(type) {
+        if (type === 'murid') {
+            const container = document.getElementById('muridInputs');
+            const newRow = document.createElement('div');
+            newRow.className = 'murid-row';
+            newRow.style.marginBottom = '10px';
+            newRow.innerHTML = `
+                <select name="murid_ids[${muridBarisIndex}]" class="murid-select" required style="width:70%; margin-right:10px;">
+                    <option value="" disabled selected>Pilih Murid</option>
+                    @foreach ($murids as $murid)
+                        <option value="{{ $murid->id }}">{{ $murid->nama }} ({{ $murid->NIK }})</option>
+                    @endforeach
+                </select>
+                <button type="button" onclick="hapusBaris(this, 'murid')" style="background-color:#f44336; color:white; padding:8px 12px; border:none; border-radius:3px; cursor:pointer;">Hapus</button>
+            `;
+            container.appendChild(newRow);
+            $(newRow).find('.murid-select').select2({
+                placeholder: 'Ketik NIK atau Nama',
+                allowClear: true,
+                width: '100%'
+            });
+            muridBarisIndex++;
+        } else if (type === 'mapel') {
+            const container = document.getElementById('mapelInputs');
+            const newRow = document.createElement('div');
+            newRow.className = 'mapel-row';
+            newRow.style.marginBottom = '10px';
+            newRow.innerHTML = `
+                <select name="mapel_data[${mapelBarisIndex}][mapel_id]" class="mapel-select" required style="width:40%; margin-right:10px;">
+                    <option value="" disabled selected>Pilih Mapel</option>
+                    @foreach ($mapels as $mapel)
+                        <option value="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</option>
+                    @endforeach
+                </select>
+                <select name="mapel_data[${mapelBarisIndex}][pengajar_id]" class="pengajar-select" required style="width:40%;">
+                    <option value="" disabled selected>Pilih Pengajar</option>
+                    @foreach ($guru as $pengajar)
+                        <option value="{{ $pengajar->id }}">{{ $pengajar->nama }} ({{ $pengajar->NIK }})</option>
+                    @endforeach
+                </select>
+                <button type="button" onclick="hapusBaris(this, 'mapel')" style="background-color:#f44336; color:white; padding:8px 12px; border:none; border-radius:3px; cursor:pointer;">Hapus</button>
+            `;
+            container.appendChild(newRow);
+            $(newRow).find('.mapel-select').select2({
+                placeholder: 'Pilih Mapel',
+                allowClear: true,
+                width: '100%'
+            });
+            $(newRow).find('.pengajar-select').select2({
+                placeholder: 'Pilih Pengajar',
+                allowClear: true,
+                width: '100%'
+            });
+            mapelBarisIndex++;
+        }
+    }
+
+    function hapusBaris(button, type) {
+        const rows = document.querySelectorAll(`.${type}-row`);
+        if (rows.length > 1) {
             button.parentElement.remove();
-            barisIndex--;
+            if (type === 'murid') {
+                muridBarisIndex--;
+            } else if (type === 'mapel') {
+                mapelBarisIndex--;
+            }
         } else {
             alert('Minimal satu baris harus tetap ada.');
         }
@@ -203,9 +325,12 @@ updated at: {{ $kelas->updated_at }} <br>
 
     // Tutup modal jika klik di luar form
     window.onclick = function(event) {
-        const modal = document.getElementById('tambahMuridModal');
-        if (event.target == modal) {
-            closeModal();
+        const muridModal = document.getElementById('tambahMuridModal');
+        const mapelModal = document.getElementById('tambahMapelModal');
+        if (event.target == muridModal) {
+            closeModal('tambahMuridModal');
+        } else if (event.target == mapelModal) {
+            closeModal('tambahMapelModal');
         }
     }
 </script>

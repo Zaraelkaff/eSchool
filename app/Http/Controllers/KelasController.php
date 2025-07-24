@@ -13,6 +13,8 @@ use App\Models\Staff;
 use App\Models\Jabatan;
 use App\Models\JabatanStaff;
 use App\Models\Murid;
+use App\Models\Mapel;
+use App\Models\KelasMapel;
 
 class KelasController extends Controller
 {
@@ -99,7 +101,21 @@ class KelasController extends Controller
     {
         $kelas = Kelas::findOrFail($id);
         $murids = Murid::whereNotIn('id', $kelas->murid->pluck('id'))->get();
-        return view('kelas.detail', compact('kelas', 'murids'));
+        $mapels = Mapel::whereNotIn('id', $kelas->kelasMapel->pluck('id'))->get();
+        $pengajars = JabatanStaff::with('staff', 'jabatan')
+            ->whereHas('jabatan', function ($q) {
+                $q->where('nama_jabatan', 'guru');
+            })
+            ->where('is_active', 1)
+            ->whereDate('tgl_mulai', '<=', Carbon::today())
+            ->where(function ($q) {
+                $q->whereNull('tgl_selesai')
+                ->orWhere('tgl_selesai', '>', Carbon::today());
+            })
+            ->get()
+            ->pluck('staff')
+            ->unique('id');
+        return view('kelas.detail', compact('kelas', 'murids', 'mapels', 'pengajars'));
     }
 
     public function hapusMurid($kelas_id, $murid_id)
@@ -148,12 +164,61 @@ class KelasController extends Controller
         }
     }
 
+    public function tambahMapel(Request $request, $kelas_id)
+    {
+        // Validasi input
+        $request->validate([
+            'mapel_data' => 'required|array',
+            'mapel_data.*.mapel_id' => 'required|exists:mapel,id',
+            'mapel_data.*.pengajar_id' => 'required|exists:staff,id',
+        ]);
+        $kelas = Kelas::findOrFail($kelas_id);
+        $existingMapelIds = KelasMapel::where('kelas_id', $kelas_id)->pluck('mapel_id')->toArray();
+
+        $newMapelData = [];
+        $duplicates = [];
+
+        foreach ($request->mapel_data as $data) {
+            if (in_array($data['mapel_id'], $existingMapelIds)) {
+                $duplicates[] = $data['mapel_id'];
+            } else {
+                $newMapelData[] = [
+                    'kelas_id' => $kelas_id,
+                    'mapel_id' => $data['mapel_id'],
+                    'pengajar_id' => $data['pengajar_id'],
+                ];
+            }
+        }
+
+        if (empty($newMapelData)) {
+            return redirect()->route('kelas.detail', $kelas_id)
+                ->with(['warning' => 'Tidak ada mata pelajaran baru yang ditambahkan karena semua mapel yang dipilih sudah terdaftar.', 'modal' => 'mapel']);
+        }
+        foreach ($newMapelData as $data) {
+            KelasMapel::create($data);
+        }
+
+        $count = count($newMapelData);
+        return redirect()->route('kelas.detail', $kelas_id)->with('success', "$count Mata pelajaran berhasil ditambahkan ke kelas.");
+    }
+
+    public function hapusMapel($kelas_id, $mapel_id)
+    {
+        DB::table('kelas_mapel')
+            ->where('kelas_id', $kelas_id)
+            ->where('mapel_id', $mapel_id)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Mapel berhasil dihapus dari kelas.');
+    }
+
     public function editView($id){
         $kelas = Kelas::findOrFail($id);
         $murids = Murid::whereNotIn('id', $kelas->murid->pluck('id'))->get();
         $masterKelas = MasterKelas::all();
         $tahunAjaran = TahunAjaran::all();
-        $waliKelas = JabatanStaff::with('staff', 'jabatan')
+        $mapels = Mapel::whereNotIn('id', $kelas->kelasMapel->pluck('id'))->get();
+        $guru = JabatanStaff::with('staff', 'jabatan')
             ->whereHas('jabatan', function ($q) {
                 $q->where('nama_jabatan', 'guru');
             })
@@ -166,7 +231,7 @@ class KelasController extends Controller
             ->get()
             ->pluck('staff')
             ->unique('id');
-        return view('kelas.edit', compact('kelas', 'murids', 'masterKelas', 'tahunAjaran', 'waliKelas'));
+        return view('kelas.edit', compact('kelas', 'murids', 'masterKelas', 'tahunAjaran', 'guru', 'mapels'));
     }
 
     public function edit(Request $request, $id)

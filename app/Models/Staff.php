@@ -24,7 +24,7 @@ class Staff extends Model
     ];
     public function kelas_mapel()
     {
-        return $this->hasMany(KelasMapel::class,'pengajar','id');
+        return $this->hasMany(KelasMapel::class,'pengajar_id','id');
     }
     public function user()
     {
