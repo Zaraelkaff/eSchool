@@ -129,19 +129,19 @@ class MasterSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_mapel'=>'Fisika',
+                'nama_mapel'=>'IPA',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_mapel'=>'Biologi',
+                'nama_mapel'=>'IPS',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_mapel'=>'Kimia',
+                'nama_mapel'=>'Seni Budaya',
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -159,11 +159,57 @@ class MasterSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nama_mapel'=>'Geografi',
-                'is_active' => false,
+                'nama_mapel'=>'PJOK',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'PPKN',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Bahasa Inggris',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Agama',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Komputer',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_mapel'=>'Istirahat',
+                'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
+
+        $jamList = [
+            ['jam_mulai' => '07:00:00', 'jam_selesai' => '08:00:00'],
+            ['jam_mulai' => '08:00:00', 'jam_selesai' => '09:00:00'],
+            ['jam_mulai' => '09:00:00', 'jam_selesai' => '10:00:00'],
+            ['jam_mulai' => '11:00:00', 'jam_selesai' => '12:00:00'],
+            ['jam_mulai' => '12:00:00', 'jam_selesai' => '13:00:00'],
+        ];
+        foreach ($jamList as $jam) {
+            DB::table('jam')->insert([
+                'jam_mulai' => $jam['jam_mulai'],
+                'jam_selesai' => $jam['jam_selesai'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

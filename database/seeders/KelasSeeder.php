@@ -69,7 +69,7 @@ class KelasSeeder extends Seeder
             // KELAS 2023/2024
             [
                 'master_kelas_id' => 1,
-                'wali_kelas_id' => 7,
+                'wali_kelas_id' => 8,
                 'tahun_ajaran_id'=> 3,
                 'is_active' => 1,
                 'created_at' => now(),

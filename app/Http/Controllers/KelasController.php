@@ -15,6 +15,7 @@ use App\Models\JabatanStaff;
 use App\Models\Murid;
 use App\Models\Mapel;
 use App\Models\KelasMapel;
+use App\Models\Jadwal;
 
 class KelasController extends Controller
 {
@@ -204,6 +205,14 @@ class KelasController extends Controller
 
     public function hapusMapel($kelas_id, $mapel_id)
     {
+        $jadwalExists = Jadwal::where('kelas_id', $kelas_id)
+            ->where('mapel_id', $mapel_id)
+            ->exists();
+
+        if ($jadwalExists) {
+            return redirect()->back()->with('error', 'Mapel tidak dapat dihapus karena sudah digunakan di jadwal kelas. Harap hapus jadwal terkait terlebih dahulu.');
+        }
+
         DB::table('kelas_mapel')
             ->where('kelas_id', $kelas_id)
             ->where('mapel_id', $mapel_id)

@@ -6,12 +6,26 @@
 <h1>{{ $kelas->master_kelas->nama_kelas }} - {{ $kelas->tahun_ajaran->tahun_ajaran }}</h1>
 <h2><a href="{{ route('staff.detail', $kelas->wali_kelas_id) }}">{{ $kelas->wali_kelas_id }} - {{ $kelas->walikelas->nama }}</a></h2>
 <a href="{{ route('kelas.editView', $kelas->id) }}">edit kelas</a><br><br>
-
+<a href="{{ route('jadwal.index', $kelas->id) }}">Jadwal</a><br><br>
+<!-- Menampilkan pesan sukses -->
 @if (session('success'))
-    <div style="color: green; margin: 10px 0;">{{ session('success') }}</div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+{{ session('success') }}
+</div>
 @endif
+
+<!-- Menampilkan pesan peringatan -->
 @if (session('warning'))
-    <div style="color: orange; margin: 10px 0;">{{ session('warning') }}</div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+{{ session('warning') }}
+</div>
+@endif
+
+<!-- Menampilkan pesan info -->
+@if (session('info'))
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+{{ session('info') }}
+</div>
 @endif
 @if (session('error'))
     <div style="color: red; margin: 10px 0;">{{ session('error') }}</div>
@@ -270,7 +284,6 @@ updated at: {{ $kelas->updated_at }} <br>
     }
 </script>
 
-<!-- CSS untuk Styling Minimal -->
 <style>
     button {
         padding: 8px 12px;

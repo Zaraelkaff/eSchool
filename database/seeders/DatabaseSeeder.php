@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             KelasSeeder::class,
             KelasMuridSeeder::class,
             JabatanStaffSeeder::class,
+            KelasMapelSeeder::class,
+            JadwalSeeder::class,
         ]);
     }
 }

@@ -63,3 +63,6 @@ Route::get('/kelas/{id}', [KelasController::class, 'detail'])->name('kelas.detai
 Route::post('/kelas/{kelas_id}/murid/tambah', [KelasController::class, 'tambahMurid'])->name('kelas.murid.tambah');
 Route::post('/kelas/{kelas_id}/mapel/tambah', [KelasController::class, 'tambahMapel'])->name('kelas.mapel.tambah');
 Route::delete('/kelas/{kelas_id}/mapel/{mapel_id}', [KelasController::class, 'hapusMapel'])->name('kelas.mapel.hapus');
+Route::get('kelas/{kelas_id}/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+Route::post('jadwal/tambah', [JadwalController::class, 'add'])->name('jadwal.add');
+Route::delete('jadwal/{id}', [JadwalController::class, 'delete'])->name('jadwal.delete');
