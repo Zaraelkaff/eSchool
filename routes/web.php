@@ -33,6 +33,7 @@ Route::patch('/staff/edit/{id}', [StaffController::class, 'edit'])->name('staff.
 Route::post('/staff/{staff}/jabatan', [StaffController::class, 'addJabatan'])->name('staff.jabatan.add');
 Route::patch('/staff/{staff}/jabatan/{jabatanStaff}', [StaffController::class, 'updateJabatan'])->name('staff.jabatan.update');
 Route::delete('/staff/{staff}/jabatan/{jabatanStaff}', [StaffController::class, 'deleteJabatan'])->name('staff.jabatan.delete');
+Route::get('/staff/{staff}/jadwal', [JadwalController::class, 'jadwalGuru'])->name('staff.jadwal');
 
 Route::get('/master/jabatan', [MasterJabatanController::class, 'index'])->name('master.jabatan.index');
 Route::patch('/master/jabatan/isActive/{id}', [MasterJabatanController::class, 'isActive'])->name('master.jabatan.isActive');

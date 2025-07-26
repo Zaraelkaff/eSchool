@@ -53,6 +53,8 @@
     </tr>
 </table>
 
+<a href="{{ route('staff.jadwal', $staff->id) }}" class="button">Jadwal Mengajar</a>
+
 <!-- Riwayat Jabatan -->
 <h2>Riwayat Jabatan</h2>
 @if($staff->jabatan_staff->isEmpty())

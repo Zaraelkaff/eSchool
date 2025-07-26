@@ -8,18 +8,13 @@ class Jadwal extends Model
 {
     protected $table = 'jadwal';
     protected $fillable = [
-        'kelas_id',
-        'mapel_id',
+        'kelas_mapel_id',
         'hari',
         'jam_id'
     ];
-    public function mapel()
+    public function kelasMapel()
     {
-        return $this->belongsTo(Mapel::class,'mapel_id','id');
-    }
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class,'kelas_id','id');
+        return $this->belongsTo(KelasMapel::class,'kelas_mapel_id','id');
     }
     public function jam()
     {

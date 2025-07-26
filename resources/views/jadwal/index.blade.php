@@ -55,7 +55,7 @@
                                     ->first();
                             @endphp
                             @if($jadwal)
-                                {{ $jadwal->mapel->nama_mapel }}
+                                {{ $jadwal->kelasMapel->mapel->nama_mapel }} - {{ $jadwal->kelasMapel->pengajar->nama }}
                                 <br>
                                 <button class="remove-btn" 
                                     data-jadwal-id="{{ $jadwal->id }}"
@@ -86,15 +86,15 @@
             <h4>Tambah Jadwal</h4>
             <form id="addScheduleForm" method="POST">
                 @csrf
-                <input type="hidden" name="kelas_id" id="modal_kelas_id">
+                <input type="hidden" name="kelas_id" id="modal_kelas_id" value="{{ $kelas->id }}">
                 <input type="hidden" name="hari" id="modal_hari">
                 <input type="hidden" name="jam_id" id="modal_jam_id">
                 
                 <div class="mb-3">
-                    <label for="mapel_id">Mata Pelajaran</label>
-                    <select name="mapel_id" id="mapel_id" class="form-select">
+                    <label for="kelas_mapel_id">Mata Pelajaran</label>
+                    <select name="kelas_mapel_id" id="kelas_mapel_id" class="form-select">
                         @foreach($kelas->kelasMapel as $kelasMapel)
-                            <option value="{{ $kelasMapel->mapel->id }}">
+                            <option value="{{ $kelasMapel->id }}">
                                 {{ $kelasMapel->mapel->nama_mapel }} - {{ $kelasMapel->pengajar->nama }}
                             </option>
                         @endforeach
@@ -128,29 +128,23 @@
         const form = this;
         const formData = new FormData(form);
 
+        // Pastikan kelas_id termasuk dalam formData
+        const kelasId = document.getElementById('modal_kelas_id').value;
+        if (kelasId) {
+            formData.append('kelas_id', kelasId);
+        }
+
         try {
             const response = await fetch('{{ route('jadwal.add') }}', {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                    'Accept': 'application/json' // Explicitly request JSON response
+                    'Accept': 'application/json'
                 }
             });
 
-            // Log the raw response for debugging
-            const responseText = await response.text();
-            console.log('Raw response:', responseText);
-
-            // Try parsing as JSON
-            let result;
-            try {
-                result = JSON.parse(responseText);
-            } catch (e) {
-                console.error('Failed to parse JSON:', e);
-                alert('Server returned an invalid response. Please check the console for details.');
-                return;
-            }
+            const result = await response.json();
 
             if (result.success) {
                 location.reload();
@@ -171,23 +165,11 @@
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                    'Accept': 'application/json' // Explicitly request JSON response
+                    'Accept': 'application/json'
                 }
             });
 
-            // Log the raw response for debugging
-            const responseText = await response.text();
-            console.log('Raw response:', responseText);
-
-            // Try parsing as JSON
-            let result;
-            try {
-                result = JSON.parse(responseText);
-            } catch (e) {
-                console.error('Failed to parse JSON:', e);
-                alert('Server returned an invalid response. Please check the console for details.');
-                return;
-            }
+            const result = await response.json();
 
             if (result.success) {
                 location.reload();
