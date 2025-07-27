@@ -9,6 +9,7 @@ use App\Http\Controllers\MasterKelasController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\PengumumanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,3 +68,12 @@ Route::delete('/kelas/{kelas_id}/mapel/{mapel_id}', [KelasController::class, 'ha
 Route::get('kelas/{kelas_id}/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
 Route::post('jadwal/tambah', [JadwalController::class, 'add'])->name('jadwal.add');
 Route::delete('jadwal/{id}', [JadwalController::class, 'delete'])->name('jadwal.delete');
+
+Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
+Route::get('/dashboard', [PengumumanController::class, 'dashboard'])->name('dashboard');
+Route::get('/pengumuman/add', [PengumumanController::class, 'addView'])->name('pengumuman.addView');
+Route::post('/pengumuman/add',[PengumumanController::class, 'add'])->name('pengumuman.add');
+Route::get('/pengumuman/edit/{id}', [PengumumanController::class, 'editView'])->name('pengumuman.editView');
+Route::patch('/pengumuman/edit/{id}', [PengumumanController::class, 'edit'])->name('pengumuman.edit');
+Route::patch('/pengumuman/isActive/{id}', [PengumumanController::class, 'isActive'])->name('pengumuman.isActive');
+Route::get('/pengumuman/{id}', [PengumumanController::class, 'detail'])->name('pengumuman.detail');
