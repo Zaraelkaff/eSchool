@@ -6,6 +6,7 @@ use App\Http\Controllers\MasterJabatanController;
 use App\Http\Controllers\MasterTahunAjaranController;
 use App\Http\Controllers\MasterMapelController;
 use App\Http\Controllers\MasterKelasController;
+use App\Http\Controllers\MasterJamController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\JadwalController;
@@ -55,6 +56,11 @@ Route::get('/master/kelas', [MasterKelasController::class, 'index'])->name('mast
 Route::patch('/master/kelas/isActive/{id}', [MasterKelasController::class, 'isActive'])->name('master.kelas.isActive');
 Route::post('/master/kelas/add', [MasterKelasController::class, 'add'])->name('master.kelas.add');
 Route::patch('/master/kelas/edit/{id}', [MasterKelasController::class, 'edit'])->name('master.kelas.edit');
+
+Route::get('/master/jam', [MasterJamController::class, 'index'])->name('master.jam.index');
+Route::patch('/master/jam/isActive/{id}', [MasterJamController::class, 'isActive'])->name('master.jam.isActive');
+Route::post('/master/jam/add', [MasterJamController::class, 'add'])->name('master.jam.add');
+Route::patch('/master/jam/edit/{id}', [MasterJamController::class, 'edit'])->name('master.jam.edit');
 
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 Route::post('/kelas/add', [KelasController::class, 'add'])->name('kelas.add');
