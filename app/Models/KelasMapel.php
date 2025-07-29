@@ -24,7 +24,7 @@ class KelasMapel extends Model
     }
 
     public function materi(){
-        return $this->belongsTo(Materi::class, 'mapel','id');
+        return $this->hasMany(Materi::class, 'mapel','id');
     }
 
     public function jadwal()

@@ -9,6 +9,7 @@ use App\Http\Controllers\MasterKelasController;
 use App\Http\Controllers\MasterJamController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MateriController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PengumumanController;
 
@@ -83,3 +84,11 @@ Route::get('/pengumuman/edit/{id}', [PengumumanController::class, 'editView'])->
 Route::patch('/pengumuman/edit/{id}', [PengumumanController::class, 'edit'])->name('pengumuman.edit');
 Route::patch('/pengumuman/isActive/{id}', [PengumumanController::class, 'isActive'])->name('pengumuman.isActive');
 Route::get('/pengumuman/{id}', [PengumumanController::class, 'detail'])->name('pengumuman.detail');
+
+Route::get('/kelas/mapel/{kelas_mapel_id}/materi', [MateriController::class, 'index'])->name('materi.index');
+Route::post('/kelas/mapel/{kelas_mapel_id}/materi', [MateriController::class, 'storeMateri'])->name('materi.store');
+Route::put('/materi/{id}', [MateriController::class, 'updateMateri'])->name('materi.update');
+Route::delete('/materi/{id}', [MateriController::class, 'destroyMateri'])->name('materi.destroy');
+Route::post('/materi/{materi_id}/submateri', [MateriController::class, 'storeSubMateri'])->name('submateri.store');
+Route::put('/submateri/{id}', [MateriController::class, 'updateSubMateri'])->name('submateri.update');
+Route::delete('/submateri/{id}', [MateriController::class, 'destroySubMateri'])->name('submateri.destroy');

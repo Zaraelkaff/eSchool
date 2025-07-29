@@ -13,14 +13,11 @@ return new class extends Migration
     {
         Schema::create('materi', function (Blueprint $table) {
             $table->id();
-
             $table->unsignedBigInteger('mapel');
             $table->foreign('mapel')->references('id')->on('kelas_mapel');
-
             $table->tinyInteger('pertemuan');
             $table->string('judul');
-            $table->string('file');
-            
+            $table->string('deskripsi');
             $table->timestamps();
         });
     }

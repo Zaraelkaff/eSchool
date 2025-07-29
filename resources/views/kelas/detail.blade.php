@@ -38,7 +38,7 @@
 @if($kelas->kelasMapel->count())
 <ul>
 @foreach($kelas->kelasMapel as $k)
-    <li>{{ $k->mapel->nama_mapel }} - {{ $k->pengajar->nama }}</li> 
+    <li>{{ $k->mapel->nama_mapel }} - {{ $k->pengajar->nama }}</li> <a href="{{ route('materi.index', $k->id) }}">Materi</a>
     <form action="{{ route('kelas.mapel.hapus', ['kelas_id' => $kelas->id, 'mapel_id' => $k->mapel_id]) }}" 
         method="POST" style="display:inline;" 
         onsubmit="return confirm('Yakin ingin menghapus {{ $k->mapel->nama_mapel }} dari kelas ini?')">
