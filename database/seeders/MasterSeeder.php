@@ -123,6 +123,12 @@ class MasterSeeder extends Seeder
         ]);
         DB::table('mapel')->insert([
             [
+                'nama_mapel'=>'kelas',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'nama_mapel'=>'Matematika',
                 'is_active' => true,
                 'created_at' => now(),

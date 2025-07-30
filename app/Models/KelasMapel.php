@@ -31,4 +31,9 @@ class KelasMapel extends Model
     {
         return $this->hasMany(Jadwal::class,'kelas_mapel_id','id');
     }
+
+    public function absen()
+    {
+        return $this->hasMany(Absen::class,'kelas_mapel_id','id');
+    }
 }

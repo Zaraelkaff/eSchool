@@ -38,14 +38,17 @@
 @if($kelas->kelasMapel->count())
 <ul>
 @foreach($kelas->kelasMapel as $k)
-    <li>{{ $k->mapel->nama_mapel }} - {{ $k->pengajar->nama }}</li> <a href="{{ route('materi.index', $k->id) }}">Materi</a>
-    <form action="{{ route('kelas.mapel.hapus', ['kelas_id' => $kelas->id, 'mapel_id' => $k->mapel_id]) }}" 
-        method="POST" style="display:inline;" 
-        onsubmit="return confirm('Yakin ingin menghapus {{ $k->mapel->nama_mapel }} dari kelas ini?')">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Hapus</button>
-    </form>
+    @if($k->mapel_id != 1)
+        <li>{{ $k->mapel->nama_mapel }} - {{ $k->pengajar->nama }}</li>
+        <a href="{{ route('materi.index', $k->id) }}">Materi</a>
+        <form action="{{ route('kelas.mapel.hapus', ['kelas_id' => $kelas->id, 'mapel_id' => $k->mapel_id]) }}" 
+            method="POST" style="display:inline;" 
+            onsubmit="return confirm('Yakin ingin menghapus {{ $k->mapel->nama_mapel }} dari kelas ini?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Hapus</button>
+        </form>
+    @endif
 @endforeach
 </ul>
 @else

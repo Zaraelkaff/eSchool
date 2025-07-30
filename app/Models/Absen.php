@@ -9,7 +9,7 @@ class Absen extends Model
     protected $table = 'absen';
     protected $fillable = [
         'tanggal',
-        'kelas_id',
+        'kelas_mapel_id',
         'murid_id',
         'status',
         'keterangan'
@@ -18,7 +18,7 @@ class Absen extends Model
         return $this-> belongsTo(Murid::class,'murid_id','id');
     }
     
-    public function kelas(){
-        return $this-> belongsTo(Kelas::class,'kelas_id','id');
+    public function kelas_mapel(){
+        return $this-> belongsTo(KelasMapel::class,'kelas_mapel_id','id');
     }
 }
