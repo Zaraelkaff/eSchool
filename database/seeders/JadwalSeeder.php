@@ -15,7 +15,6 @@ class JadwalSeeder extends Seeder
             ['kelas_mapel_id'=>11, 'hari'=>'Senin', 'jam_id'=>3, 'created_at'=>now(), 'updated_at'=>now()],
             ['kelas_mapel_id'=>4, 'hari'=>'Senin', 'jam_id'=>4, 'created_at'=>now(), 'updated_at'=>now()],
             ['kelas_mapel_id'=>4, 'hari'=>'Senin', 'jam_id'=>5, 'created_at'=>now(), 'updated_at'=>now()],
-            ['kelas_mapel_id'=>4, 'hari'=>'Senin', 'jam_id'=>5, 'created_at'=>now(), 'updated_at'=>now()],
 
             ['kelas_mapel_id'=>3, 'hari'=>'Selasa', 'jam_id'=>1, 'created_at'=>now(), 'updated_at'=>now()],
             ['kelas_mapel_id'=>3, 'hari'=>'Selasa', 'jam_id'=>2, 'created_at'=>now(), 'updated_at'=>now()],

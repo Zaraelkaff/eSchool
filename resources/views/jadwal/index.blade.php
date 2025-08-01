@@ -94,11 +94,9 @@
                     <label for="kelas_mapel_id">Mata Pelajaran</label>
                     <select name="kelas_mapel_id" id="kelas_mapel_id" class="form-select">
                         @foreach($kelas->kelasMapel as $kelasMapel)
-                            @if($kelasMapel->mapel->id != 1)
                             <option value="{{ $kelasMapel->id }}">
                                 {{ $kelasMapel->mapel->nama_mapel }} - {{ $kelasMapel->pengajar->nama }}
                             </option>
-                            @endif
                         @endforeach
                     </select>
                 </div>

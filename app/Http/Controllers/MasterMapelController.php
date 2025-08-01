@@ -10,7 +10,7 @@ class MasterMapelController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter','aktif');
-        $dataMapel = Mapel::query()->where('id', '!=', 1);
+        $dataMapel = Mapel::query();
         if($filter === 'aktif'){
             $dataMapel->where('is_active',1);
         }elseif($filter === 'nonaktif'){

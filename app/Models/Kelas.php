@@ -33,6 +33,10 @@ class Kelas extends Model
     {
         return $this->hasMany(Jadwal::class,'kelas_id','id');
     }
+    public function absen()
+    {
+        return $this->hasMany(Absen::class,'kelas_id','id');
+    }
     public function kelasMapel()
     {
         return $this->hasMany(KelasMapel::class, 'kelas_id');

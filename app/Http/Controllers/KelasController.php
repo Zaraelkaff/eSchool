@@ -94,11 +94,6 @@ class KelasController extends Controller
         $kelas->wali_kelas_id = $request->wali_kelas_id;
         $kelas->is_active = $request->is_active;
         $kelas->save();
-        $kelasmapel = new KelasMapel();
-        $kelasmapel->kelas_id = $kelas->id;
-        $kelasmapel->mapel_id = 1;
-        $kelasmapel->pengajar_id = $kelas->wali_kelas_id;
-        $kelasmapel->save();
 
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan.');
     }
@@ -107,9 +102,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::findOrFail($id);
         $murids = Murid::whereNotIn('id', $kelas->murid->pluck('id'))->get();
-        $mapels = Mapel::whereNotIn('id', $kelas->kelasMapel->pluck('id'))
-               ->where('id', '!=', 1)
-               ->get();
+        $mapels = Mapel::whereNotIn('id', $kelas->kelasMapel->pluck('id'))->get();
         $pengajars = JabatanStaff::with('staff', 'jabatan')
             ->whereHas('jabatan', function ($q) {
                 $q->where('nama_jabatan', 'guru');

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('absen', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->unsignedBigInteger('kelas_mapel_id');
-            $table->foreign('kelas_mapel_id')->references('id')->on('kelas_mapel');
+            $table->unsignedBigInteger('kelas_id');
+            $table->foreign('kelas_id')->references('id')->on('kelas');
             $table->unsignedBigInteger('murid_id');
             $table->foreign('murid_id')->references('id')->on('murid');
             $table->enum('status', ['A', 'H', 'I', 'S']);
