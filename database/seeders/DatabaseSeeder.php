@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             JabatanStaffSeeder::class,
             KelasMapelSeeder::class,
             JadwalSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MuridController;
 use App\Http\Controllers\MasterJabatanController;
@@ -92,3 +93,15 @@ Route::delete('/materi/{id}', [MateriController::class, 'destroyMateri'])->name(
 Route::post('/materi/{materi_id}/submateri', [MateriController::class, 'storeSubMateri'])->name('submateri.store');
 Route::put('/submateri/{id}', [MateriController::class, 'updateSubMateri'])->name('submateri.update');
 Route::delete('/submateri/{id}', [MateriController::class, 'destroySubMateri'])->name('submateri.destroy');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
