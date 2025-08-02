@@ -14,6 +14,9 @@ class Absen extends Model
         'status',
         'keterangan'
     ];
+    protected $casts = [
+        'tanggal' => 'datetime:Y-m-d',
+    ];
     public function murid(){
         return $this-> belongsTo(Murid::class,'murid_id','id');
     }

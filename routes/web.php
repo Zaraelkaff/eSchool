@@ -13,6 +13,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\AbsenController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -93,6 +94,12 @@ Route::delete('/materi/{id}', [MateriController::class, 'destroyMateri'])->name(
 Route::post('/materi/{materi_id}/submateri', [MateriController::class, 'storeSubMateri'])->name('submateri.store');
 Route::put('/submateri/{id}', [MateriController::class, 'updateSubMateri'])->name('submateri.update');
 Route::delete('/submateri/{id}', [MateriController::class, 'destroySubMateri'])->name('submateri.destroy');
+
+Route::prefix('absen/admin')->group(function () {
+    Route::get('/index', [AbsenController::class, 'indexAdmin'])->name('absen.admin.index');
+    Route::get('/form/{kelas_id?}', [AbsenController::class, 'formAdmin'])->name('absen.admin.form');
+    Route::post('/form', [AbsenController::class, 'storeAdmin'])->name('absen.admin.store');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
