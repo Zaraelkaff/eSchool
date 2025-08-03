@@ -38,7 +38,7 @@ class StaffSeeder extends Seeder
                 'lulusan' => $lulusan,
                 'tgl_masuk' => '2020-07-15',
                 'tgl_keluar' => null,
-                'users_id' => null,
+                'users_id' => $i === 1 ? 2 : null,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
