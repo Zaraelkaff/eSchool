@@ -107,6 +107,10 @@ Route::prefix('absen/wali_kelas')->middleware('auth')->group(function () {
     Route::post('/form', [AbsenController::class, 'storeWaliKelas'])->name('absen.wali_kelas.store');
 });
 
+Route::prefix('absen/murid')->middleware('auth')->group(function () {
+    Route::get('/index', [AbsenController::class, 'indexMurid'])->name('absen.murid.index');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

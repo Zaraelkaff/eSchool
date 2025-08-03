@@ -42,7 +42,7 @@ class MuridSeeder extends Seeder
                 'nama_ibu' => $namaIbu[array_rand($namaIbu)],
                 'tgl_masuk' => $tanggalMasuk->format('Y-m-d'),
                 'tgl_keluar' => null,
-                'users_id' => null,
+                'users_id' => $i === 5 ? 4 : null,
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

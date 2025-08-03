@@ -400,4 +400,69 @@ class AbsenController extends Controller
             return $redirect->with('info', 'Tidak ada perubahan pada data absen.');
         }
     }
+
+    public function indexMurid(Request $request)
+    {
+        // Ambil murid terkait pengguna login
+        $murid = Murid::where('users_id', Auth::id())->first();
+        if (!$murid) {
+            return redirect()->route('absen.murid.index')->with('error', 'Anda tidak terdaftar sebagai murid.');
+        }
+        $namaMurid = $murid->nama;
+
+        // Ambil kelas yang diambil murid
+        $kelasList = $murid->kelas()->get();
+        if ($kelasList->isEmpty()) {
+            return redirect()->route('absen.murid.index')->with('error', 'Anda tidak memiliki riwayat kelas.');
+        }
+
+        // Filter
+        $kelasId = $request->query('kelas_id');
+
+        $data = [];
+        $errorMessage = null;
+
+        // Ambil kelas yang akan ditampilkan
+        $filteredKelas = $kelasId && $kelasId !== 'all'
+            ? $kelasList->where('id', $kelasId)->filter()
+            : $kelasList;
+
+        foreach ($filteredKelas as $kelas) {
+            // Ambil tahun ajaran
+            $selectedTahunAjaran = TahunAjaran::find($kelas->tahun_ajaran_id);
+            if ($selectedTahunAjaran) {
+                // Hitung rentang bulan dalam tahun ajaran
+                $start = Carbon::parse($selectedTahunAjaran->tgl_mulai)->startOfMonth();
+                $end = Carbon::parse($selectedTahunAjaran->tgl_selesai)->endOfMonth();
+                $months = [];
+                $currentMonth = $start->copy();
+                while ($currentMonth <= $end) {
+                    $months[] = [
+                        'year' => $currentMonth->year,
+                        'month' => $currentMonth->month,
+                        'label' => $currentMonth->format('F Y'),
+                    ];
+                    $currentMonth->addMonth();
+                }
+
+                // Ambil data absen untuk murid dan kelas
+                $absen = Absen::where('kelas_id', $kelas->id)
+                    ->where('murid_id', $murid->id)
+                    ->whereBetween('tanggal', [$start, $end])
+                    ->get()
+                    ->keyBy(function ($item) {
+                        return $item->tanggal->format('Y-m-d');
+                    });
+
+                $data[$kelas->id] = [
+                    'kelas' => $kelas,
+                    'months' => $months,
+                    'absen' => $absen,
+                    'days' => range(1, 31),
+                ];
+            }
+        }
+
+        return view('absen.murid.index', compact('kelasList', 'data', 'errorMessage', 'kelasId','namaMurid'));
+    }
 }
